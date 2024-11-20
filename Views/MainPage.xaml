@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:maui_meteosuisse.ViewModels"
+             xmlns:model="clr-namespace:maui_meteosuisse.Models"
+             xmlns:helpers="clr-namespace:maui_meteosuisse.Helpers"
+             x:Class="maui_meteosuisse.Views.MainPage"
+             Title="{Binding Title}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <VerticalStackLayout
+            Margin="5"
+            Grid.Row="0">
+            <Label
+                Text="{Binding Meteo.city_name}"
+                FontSize="18"
+                HorizontalOptions="Center" />
+            <Label
+                Text="{Binding Path=Meteo.altitude, StringFormat='{0:D} mètres'}"
+                FontSize="18"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="{Binding Path=Meteo.current.temperature, StringFormat='{0:F1}°C'}"
+                FontSize="18"
+                HorizontalOptions="Center" />
+
+            <Image
+                Source="https://www.meteosuisse.admin.ch/static/product/resources/weather-symbols/120.png" />
+
+        </VerticalStackLayout>
+        
+        <HorizontalStackLayout
+                HorizontalOptions="Center"
+                Spacing="10"
+                Grid.Row="1">
+            <Button 
+                    Grid.Row="2"
+                    Text="Load meteo"
+                    IsEnabled="{Binding IsNotBusy}"
+                    IsVisible="{Binding IsNotBusy}"
+                    Command="{Binding GetMeteoCommand}"
+                    HorizontalOptions="Center" />
+            <Label
+                    x:Name="LabelLoad"
+                    IsVisible="{Binding IsBusy}"
+                    FontFamily="FAS"
+                    FontSize="Large"
+                    VerticalOptions="Center"
+                    Text="{x:Static helpers:FontAwesomeIcons.Spinner}" />
+        </HorizontalStackLayout>
+    </Grid>
+
+</ContentPage>
